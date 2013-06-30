@@ -1,7 +1,12 @@
 class ProductsController < ApplicationController
 
 	def index
-		@products = Product.includes(:user).all
+		@products = Product.includes(:user).first(20)
+    # @sum_price = Product.sum(:price).to_f
+    @sum_price = 0.0
+    @products.each do |product|
+      @sum_price += product[:price]
+    end
 	end
 
 	def create

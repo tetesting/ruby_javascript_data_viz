@@ -1,5 +1,7 @@
 <h2> Products in the market </h2>
 
+<div id="highChartContainer" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
 <table>
   <tbody>
     <tr>
@@ -19,6 +21,35 @@
     <% end %>
   </tbody>
 </table>
+
+<script>
+  console.log('the number of products is ' + '<%= @products.count %>');
+  $(document).ready(function() {
+    $('table');
+
+    
+    var chart = $('#highChartContainer')
+    chart.highcharts({
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false
+    },
+    title: {
+        text: 'Browser market shares at a specific website, 2010'
+    },
+    series: [{
+        type: 'pie',
+        name: 'Percentage of Total Cost',
+        data: <%= 
+          @products.map do |product|
+            [product.name, product.price/@sum_price]
+          end.to_json.html_safe %>
+      }]
+    });
+
+  });
+</script>
 
    
    
