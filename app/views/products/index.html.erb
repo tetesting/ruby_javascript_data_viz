@@ -1,5 +1,6 @@
 <h2> Products in the market </h2>
 
+<button data-hide-element='chart'>Hide Chart</button>
 <div id="highChartContainer" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 
 <table>
@@ -25,6 +26,7 @@
 <script>
   console.log('the number of products is ' + '<%= @products.count %>');
   $(document).ready(function() {
+    var isChartVisible = true;
     $('table');
 
     
@@ -48,6 +50,18 @@
       }]
     });
 
+    $('[data-hide-element=chart]').on('click', function() {
+      var button = $(this);
+      $('#highChartContainer').toggle();
+      isChartVisible = !isChartVisible;
+
+      if (isChartVisible) {
+        button.html("Hide Chart");
+      } else {
+        button.html("Show Chart");
+      }
+
+    });
   });
 </script>
 
