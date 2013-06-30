@@ -18,6 +18,9 @@
       	<td><%= product.name %></td>
       	<td>$<%= product.price %></td>
       	<td><%= product.user.name if product.user.present? %></td>
+        <!-- !! Open to cross-site scripting !! -->
+        <td><%= link_to "-", product_path(product, product: {price: product.price-1}), method: :put %></td>
+        <td><%= link_to "+", product_path(product, product: {price: product.price+1}), method: :put %></td>
       </tr>
     <% end %>
   </tbody>
