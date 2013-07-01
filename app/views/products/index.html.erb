@@ -71,13 +71,7 @@
 
     });
 
-    $('[data-decr-price]').on('click', function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      url = $(this).attr('href');
-      price = $(this).attr('data-price');
-      newPrice = parseInt(price) - 1;
-
+    updateProductPrice = function(url, newPrice){
       $.ajax({
         url: url,
         type: 'put',
@@ -89,8 +83,16 @@
           $('[data-incr-price='+data.id+']').attr('data-price', data.price);
           console.log(data.id + ' ' + data.price + ' ' + data.user_id);
       });
+    };
 
-      console.log(newPrice);
+    $('[data-decr-price]').on('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      url = $(this).attr('href');
+      price = $(this).attr('data-price');
+      newPrice = parseInt(price) - 1;
+
+      updateProductPrice(url, newPrice);
     });
 
     $('[data-incr-price]').on('click', function(e){
@@ -100,19 +102,7 @@
       price = $(this).attr('data-price');
       newPrice = parseInt(price) + 1;
 
-
-      $.ajax({
-        url: url,
-        type: 'put',
-        dataType: 'json',
-        data: {product: {price: newPrice}},
-        }).success(function(data, textStatus, jqXHR){
-          $('[data-product='+data.id+']').html('$'+data.price);
-          $('[data-decr-price='+data.id+']').attr('data-price', data.price);
-          $('[data-incr-price='+data.id+']').attr('data-price', data.price);
-          console.log(data.id + ' ' + data.price + ' ' + data.user_id);
-      });
-      console.log(url);
+      updateProductPrice(url, newPrice);
     });
 
   });
